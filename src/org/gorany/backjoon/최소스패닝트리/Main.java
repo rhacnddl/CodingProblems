@@ -74,10 +74,12 @@ public class Main {
         list.sort(comparator);
 
         int sum = 0;
+        int cnt = 1;
         for(int i=1; i<=e; i++){
             Edge edge = list.get(i-1);
 
-            if(!findParent(parent, edge.v[0], edge.v[1])) {
+            if(!findParent(parent, edge.v[0], edge.v[1]) && cnt < v - 1) {
+                cnt++;
                 sum += edge.w;
                 unionParent(parent, edge.v[0], edge.v[1]);
             }
