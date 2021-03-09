@@ -26,11 +26,11 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine()), i, k;
 
-        for(i=0; i<n; i++){ //n회 반복
+        for(i=0; i<n; i++){
             int mid = (n - 1) - i; //별을 찍을 개수
 
-            for(k=mid; k<n; k++) //n - mid회 반복
-                System.out.print("*");
+            for(k=0; k<n; k++)
+                System.out.print(k < mid? " " : "*");
 
             System.out.println();
         }
