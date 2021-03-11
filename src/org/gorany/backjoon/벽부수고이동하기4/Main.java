@@ -84,11 +84,11 @@ public class Main {
         }
 
         BFS();
-
         for(int i=1; i<=n; i++){
+            StringBuilder builder = new StringBuilder();
             for(int j=1; j<=m; j++)
-                System.out.print(move[i][j] % 10);
-            System.out.println();
+                builder.append(move[i][j] % 10);
+            System.out.println(builder.toString());
         }
     }
 }
