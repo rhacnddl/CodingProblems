@@ -18,12 +18,12 @@ public class Main {
             return d-o.d;
         }
     }
-    static Queue<Edge> Q = new PriorityQueue<>();
-    static List<Edge>[] list;
+    static List<Edge>[] list = new ArrayList[1001];
     static final int INF = 1000000000;
-    static int[] distance, from;
+    static int[] distance = new int[1001], from = new int[1001];
 
-    static void Dijkstra(int start, int end, int n, int m) {
+    static void Dijkstra(int start) {
+        Queue<Edge> Q = new PriorityQueue<>();
         distance[start] = 0;
         Q.add(new Edge(start, 0));
 
@@ -39,10 +39,10 @@ public class Main {
                 int next = nextEdge.tg;
                 int nextDistance = d + nextEdge.d;
 
-                if(distance[next] >= nextDistance){
+                if(distance[next] > nextDistance){
                     distance[next] = nextDistance;
+
                     from[next] = current;
-                    //System.out.println("current: " + current + " from["+next+"] : " + current);
                     Q.add(new Edge(next, nextDistance));
                 }
             }
@@ -56,9 +56,6 @@ public class Main {
         int n = Integer.parseInt(br.readLine());
         int m = Integer.parseInt(br.readLine());
 
-        from = new int[n+1];
-        distance = new int[n+1];
-        list = new ArrayList[n+1];
         for(int i=1; i<=n; i++) {
             distance[i] = INF;
             from[i] = i;
@@ -77,26 +74,22 @@ public class Main {
         int start = Integer.parseInt(st.nextToken());
         int end = Integer.parseInt(st.nextToken());
 
-        Dijkstra(start, end, n, m);
+        Dijkstra(start);
 
-        List<Integer> l = new ArrayList<>();
-        int a=end;
-        l.add(end);
-        while(from[a] != start){
-            l.add(from[a]);
-            a = from[a];
+        int tmp = end, idx = 0, cnt = 0;
+        int[] result = new int[1001];
+
+        while(true) {
+            result[idx++] = tmp;
+            cnt++;
+
+            if (tmp == start) break;
+            tmp = from[tmp];
         }
-        l.add(start);
 
         System.out.println(distance[end]);
-        System.out.println(l.size());
-        for(int i=l.size()-1; i>=0; i--)
-            System.out.print(l.get(i) + " ");
-        System.out.println();
-
-        Arrays.stream(distance).skip(1).forEach(i->System.out.print(i + " "));
-        System.out.println();
-        Arrays.stream(from).skip(1).forEach(i->System.out.print(i + " "));
-        System.out.println();
+        System.out.println(cnt);
+        for(int i=idx-1; i>=0; i--)
+            System.out.print(result[i] + " ");
     }
 }
