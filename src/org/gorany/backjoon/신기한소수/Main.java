@@ -25,7 +25,7 @@ public class Main {
         else{
             for(int i=1; i<=9; i++) {
                 String s = str + i;
-                if (isPrime(Integer.parseInt(s.toString())))
+                if (isPrime(Integer.parseInt(s)))
                     DFS(s, len + 1);
             }
         }
