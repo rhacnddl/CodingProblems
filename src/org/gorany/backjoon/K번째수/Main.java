@@ -16,9 +16,11 @@ public class Main {
 
         for(int i=1; i<=n; i++)
             for(int j=1; j<=n; j++) {
-                B[j + (i-1) * n] = (long) i * j;
+                B[j + (i-1) * n] = (i * j);
             }
+        System.out.println(Arrays.toString(B));
         Arrays.sort(B);
+        System.out.println(Arrays.toString(B));
 
         int left = 0, right = k;
 
