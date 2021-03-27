@@ -3,7 +3,6 @@ package org.gorany.backjoon.문자열폭발;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Stack;
 
 public class Main {
 
@@ -11,37 +10,38 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         String origin = br.readLine();
-        char[] chars = br.readLine().toCharArray();
+        char[] bomb = br.readLine().toCharArray();
+        int bombSize = bomb.length;
 
-        Stack<Character> stack = new Stack<>();
+        char[] arr = origin.toCharArray();
 
-        while(true){
-            boolean flag = true;
-            StringBuilder sb = new StringBuilder();
-            char[] arr = origin.toCharArray();
+        int top = -1;
+        char[] stack = new char[1000001];
+        for (char c : arr) {
+            stack[++top] = c;
 
-            for(int i=0; i<arr.length; i++){
-                stack.push(arr[i]);
+            //현재 문자가 폭발 문자열의 가장 마지막 꺼와 같다면 and stack의 크기가 폭발문자열 크기 이상이어야함
+            if (stack[top] == bomb[bombSize - 1] && top >= bombSize - 1) {
 
-                if(stack.peek() == chars[ chars.length-1 ]){
-                    boolean delete = true;
-                    for(int j=i, idx=chars.length-1; j>i-chars.length; j--, idx--)
-                        if(stack.elementAt(j) != chars[idx])
-                            delete = false;
+                boolean flag = true;
+                //한 문자씩 뒤로 가며 폭발 문자와 비교 (폭발 문자열과 다르면 flag = false)
+                for (int j = bombSize - 1, z = 0; j >= 0; j--, z++)
+                    if (stack[top - z] != bomb[j]) {
+                        flag = false;
+                        break;
+                    }
 
-                    if(delete)
-                        for(int j=0; j<chars.length; j++)
-                            stack.pop();
-                }
+                if (flag) //폭발 문자열이 존재하면 폭파 (top을 줄이면된다)
+                    top -= bombSize;
             }
-
-            while(!stack.isEmpty()) {
-                sb.append(stack.pop());
-            }
-
-            origin = sb.reverse().toString();
-            if(flag) break;
         }
+
+        StringBuilder sb = new StringBuilder();
+        for(int i=0; i<=top; i++)
+            sb.append(stack[i]);
+
+        origin = sb.toString();
+
         System.out.println(origin.equals("")? "FRULA":origin);
     }
 }
