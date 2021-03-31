@@ -7,8 +7,8 @@ import java.util.StringTokenizer;
 
 public class Main {
 
-    static boolean[] visit = new boolean[50];
-    static int[][] mat = new int[50][50];
+    static boolean[] visit = new boolean[51];
+    static int[][] mat = new int[51][51];
     static int n, cnt = 0;
 
     static void DFS(int x){
@@ -22,7 +22,7 @@ public class Main {
                 DFS(i);
             }
 
-        if(!hasChild && x != 0) cnt++;
+        if(!hasChild) cnt++;
     }
 
     public static void main(String[] args) throws IOException {
@@ -43,8 +43,8 @@ public class Main {
         int rm = Integer.parseInt(br.readLine());
 
         visit[rm] = true;
-
-        DFS(root);
-        System.out.println(rm == root? 0 : cnt);
+        if(root != rm)
+            DFS(root);
+        System.out.println(cnt);
     }
 }
